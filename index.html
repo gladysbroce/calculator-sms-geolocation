@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- 
+Program Description: This is a mobile application that provides the following functionalities:
+1. Calculator
+2. SMS
+3. Geolocation
+-->
+<html>
+    <head>
+        <title>Calc+SMS+Geo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://maps.googleapis.com/ https://maps.gstatic.com/ https://mts0.googleapis.com/ 'unsafe-inline' 'unsafe-eval'">
+        <link rel="stylesheet" href="css/styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="shortcut icon" href="#" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/calc.js"></script>
+        <script type="text/javascript" src="js/sms.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>        
+    </head>
+    <body>
+        <!-- Mobile App -->
+        <div id="main">
+            <!-- Menu -->
+            <div class="menu">
+                <button class="menuBtn" id="calcBtn" onclick="show('calc')">Calculator</button>
+                <button class="menuBtn" id="smsBtn" onclick="show('sms')">SMS</button>
+                <button class="menuBtn" id="geoBtn" onclick="show('map')">Geolocation</button>
+            </div>
+            <div class="clear"></div>
+            <div id="show"></div>
+            
+            <!-- Calculator -->
+            <div id="calc" style="display:block">
+                <!-- Screen Container -->
+                <div class="screen-container">
+                    <!-- Main Screen Display -->
+                    <div class="result">
+                        <div id="display"></div>
+                    </div>
+                    <!-- Lower Screen Display -->
+                    <div class="result">
+                        <div id="output"></div>
+                    </div>
+                </div>
+                <!-- 1st Row -->
+                <div class="keys">
+                    <button class="btn opeBtn clear" value="C">C</button>
+                    <button class="btn opeBtn backspace" value="←">←</button>
+                    <button class="btn opeBtn operator" value="%">%</button>
+                    <button class="btn opeBtn operator" value="/">/</button>
+                </div>
+                <!-- 2nd Row -->
+                <div class="keys">
+                    <button class="btn digit" value="7">7</button>
+                    <button class="btn digit" value="8">8</button>
+                    <button class="btn digit" value="9">9</button>
+                    <button class="btn opeBtn operator" value="*">x</button>
+                </div>
+                <!-- 3rd Row -->
+                <div class="keys">
+                    <button class="btn digit" value="4">4</button>
+                    <button class="btn digit" value="5">5</button>
+                    <button class="btn digit" value="6">6</button>
+                    <button class="btn opeBtn operator" value="-">-</button>
+                </div>
+                <!-- 4th Row -->
+                <div class="keys">
+                    <button class="btn digit" value="1">1</button>
+                    <button class="btn digit" value="2">2</button>
+                    <button class="btn digit" value="3">3</button>
+                    <button class="btn opeBtn operator" value="+">+</button>
+                </div>
+                <!-- 5th Row -->
+                <div class="keys">
+                    <button class="btn digit zero" value="0">0</button>
+                    <button class="btn decimal" value=".">.</button>
+                    <button class="btn opeBtn equal" value="=">=</button>
+                </div>
+            </div>
+            
+            <!-- SMS -->
+            <div id="sms" style="display:none">
+                <div id="smsForm">
+                    <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
+                    <textarea id="messageTxt" placeholder="Enter message" maxlength="160" rows="5"></textarea>
+                    <input id="sendBtn" type="button" value="Send" />
+                </div>
+            </div>
+            
+            <!-- Geolocation -->
+            <div id="map" style="display:none;">
+                <div id="googleMap"></div>
+                <div id="overMap">Retrieving your location...</div>
+            </div>
+            
+            <script>
+                /**
+                 * Show Selected Menu
+                 */
+                function show(type) {
+                    // Hide all
+                    document.getElementById("calc").style.display = "none";
+                    document.getElementById("sms").style.display = "none";
+                    document.getElementById("map").style.display = "none";
+                    
+                    // Display selected
+                    document.getElementById(type).style.display = "block";
+                }
+                
+                // Add Event Listeners
+                document.addEventListener("deviceready", onDeviceReady, false);
+                function onDeviceReady() {
+                    document.getElementById("sendBtn").addEventListener('click', app.sendSms);
+                    document.getElementById("geoBtn").addEventListener('click', getMapLocation);
+                }
+            </script>
+        </div>
+    </body>
+</html>
